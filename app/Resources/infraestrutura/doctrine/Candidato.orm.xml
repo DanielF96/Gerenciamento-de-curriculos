@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity repository-class="infraestrutura\Persistence\Doctrine\OportunidadeRepository"
+            name="Domain\Model\Candidato"
+            table="candidato">
+
+        <id name="idCandidato" type="integer" column="id_Candidato">
+            <generator strategy="AUTO" />
+        </id>
+
+        <field name="nome" type="string" column="nome" />
+        <field name="email" type="string" column="email" />
+        <field name="curriculo" type="string" column="curriculo" />
+        <field name="telefone" type="string" column="telefone" />
+        <many-to-many target-entity="Domain\Model\HabilidadeTecnica" field="habilidadesTecnicas">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+            <join-table name="candidato_habilidade_tecnica">
+                <join-columns>
+                    <join-column name="id_Candidato" referenced-column-name="id_Candidato"/>
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="id_Habilidade_Tecnica" referenced-column-name="id_Habilidade_Tecnica"/>
+                </inverse-join-columns>
+            </join-table >
+        </many-to-many>
+
+        <many-to-many target-entity="Domain\Model\ExperienciaProfissional" field="experienciasProfissionais">
+            <join-table name="candidato_experiencia_profissional">
+                <join-columns>
+                    <join-column name="id_Candidato" referenced-column-name="id_Candidato"/>
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="id_Experiencia_Profissional" referenced-column-name="id_Experiencia_Profissional"/>
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
+    </entity>
+</doctrine-mapping>
